@@ -1,2 +1,5 @@
-define test = 10 + 20 * 30
-test = test + 2
+define test = 20
+if test == 20 then
+    print test
+    print 69420
+endif

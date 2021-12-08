@@ -59,6 +59,17 @@ class Parser:
             self.match(TokenType.EQUAL)
             self.expression()
 
+        elif self.check_token(TokenType.KEYWORD_IF):
+            print("STATEMENT_IF")
+            self.next_token()
+            self.comparison()
+            self.match(TokenType.KEYWORD_THEN)
+
+            while not self.check_token(TokenType.KEYWORD_ENDIF) or self.check_token(TokenType.EOF):
+                self.statement()
+
+            self.match(TokenType.KEYWORD_ENDIF)
+
         else:
             self.error_and_die(f"invalid statement at {self.current_token.repr} ({self.current_token.type})")
 
@@ -103,6 +114,24 @@ class Parser:
         self.match(TokenType.CHAR_NEWLINE)
         while self.check_token(TokenType.CHAR_NEWLINE):
             self.next_token()
+
+    def comparison(self):
+        print("COMPARISON")
+
+        self.expression()
+
+        if self.is_comparison_operator():
+            self.next_token()
+            self.expression()
+        else:
+            self.error_and_die(f"expected comparison operator after: {self.current_token.repr}")
+
+        while self.is_comparison_operator():
+            self.next_token()
+            self.expression()
+
+    def is_comparison_operator(self):
+        return self.check_token(TokenType.COMP_EQEQ) or self.check_token(TokenType.COMP_NTEQ) or self.check_token(TokenType.COMP_LT) or self.check_token(TokenType.COMP_GT) or self.check_token(TokenType.COMP_LTEQ) or self.check_token(TokenType.COMP_GTEQ)
 
     def error_and_die(self, message):
         self.lexer.error_and_die(message);

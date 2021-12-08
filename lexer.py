@@ -19,7 +19,10 @@ class TokenType(Enum):
     COMP_GTEQ = 14
     KEYWORD_DEFINE = 15
     KEYWORD_PRINT = 16
-    IDENTIFIER = 17
+    KEYWORD_IF = 17
+    KEYWORD_THEN = 18
+    KEYWORD_ENDIF = 19
+    IDENTIFIER = 20
 
 class Token:
     def __init__(self, tk, rep):
@@ -170,6 +173,12 @@ class Lexer:
                 token = Token(TokenType.KEYWORD_DEFINE, identifier_str)
             elif identifier_str == 'print':
                 token = Token(TokenType.KEYWORD_PRINT, identifier_str)
+            elif identifier_str == 'if':
+                token = Token(TokenType.KEYWORD_IF, identifier_str)
+            elif identifier_str == 'then':
+                token = Token(TokenType.KEYWORD_THEN, identifier_str)
+            elif identifier_str == 'endif':
+                token = Token(TokenType.KEYWORD_ENDIF, identifier_str)
             else:
                 token = Token(TokenType.IDENTIFIER, identifier_str)
         else:
