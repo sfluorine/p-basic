@@ -1,2 +1,2 @@
-# Variable Assignment
-define test = "haha"
+define test = 10 + 20 * 30
+test = test + 2
