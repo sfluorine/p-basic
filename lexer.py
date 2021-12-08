@@ -10,16 +10,16 @@ class TokenType(Enum):
     BINOP_DIV = 5
     LITERAL_NUMBER = 6
     LITERAL_STRING = 7
-    KEYWORD_DEFINE = 8
-    EQUAL = 9
-    COMP_EQEQ = 10
-    COMP_NTEQ = 11
+    EQUAL = 8
+    COMP_EQEQ = 9
+    COMP_NTEQ = 10
     COMP_LT = 11
     COMP_GT = 12
     COMP_LTEQ = 13
     COMP_GTEQ = 14
-    STATEMENT_PRINT = 15
-    IDENTIFIER = 16
+    KEYWORD_DEFINE = 15
+    KEYWORD_PRINT = 16
+    IDENTIFIER = 17
 
 class Token:
     def __init__(self, tk, rep):
@@ -169,7 +169,7 @@ class Lexer:
             if identifier_str == 'define':
                 token = Token(TokenType.KEYWORD_DEFINE, identifier_str)
             elif identifier_str == 'print':
-                token = Token(TokenType.STATEMENT_PRINT, identifier_str)
+                token = Token(TokenType.KEYWORD_PRINT, identifier_str)
             else:
                 token = Token(TokenType.IDENTIFIER, identifier_str)
         else:

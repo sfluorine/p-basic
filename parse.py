@@ -36,7 +36,7 @@ class Parser:
         if self.check_token(TokenType.CHAR_NEWLINE):
             self.next_token()
 
-        elif self.check_token(TokenType.STATEMENT_PRINT):
+        elif self.check_token(TokenType.KEYWORD_PRINT):
             print("STATEMENT_PRINT")
             self.next_token()
 
