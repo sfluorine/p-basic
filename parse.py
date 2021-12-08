@@ -10,21 +10,25 @@ class Parser:
         self.next_token()
         self.next_token()
 
+    # Check if token match
     def check_token(self, kind):
         return kind == self.current_token.type
 
     def check_peek(self, kind):
         return kind == self.peek_token.type
 
+    # Check if token match and advance token if sucess, throw error if failed
     def match(self, kind):
         if not self.check_token(kind):
             self.error_and_die(f"expected {kind}, got {self.current_token.type}")
         self.next_token()
 
+    # Advance Token
     def next_token(self):
         self.current_token = self.peek_token
         self.peek_token = self.lexer.get_token()
 
+    # Begin Parsing
     def program(self):
         while self.check_token(TokenType.CHAR_NEWLINE):
             self.next_token()
@@ -32,10 +36,13 @@ class Parser:
         while not self.check_token(TokenType.EOF):
             self.statement()
 
+    # Check for statement 
     def statement(self):
+        # Ignore newline
         if self.check_token(TokenType.CHAR_NEWLINE):
             self.next_token()
 
+        # Print is built in to the statement not function
         elif self.check_token(TokenType.KEYWORD_PRINT):
             print("STATEMENT_PRINT")
             self.next_token()
@@ -59,6 +66,7 @@ class Parser:
             self.match(TokenType.EQUAL)
             self.expression()
 
+        # If statement
         elif self.check_token(TokenType.KEYWORD_IF):
             print("STATEMENT_IF")
             self.next_token()
@@ -115,6 +123,7 @@ class Parser:
         while self.check_token(TokenType.CHAR_NEWLINE):
             self.next_token()
 
+    # Expect comparison expression in if statement, if not found it will throw error
     def comparison(self):
         print("COMPARISON")
 
@@ -130,6 +139,7 @@ class Parser:
             self.next_token()
             self.expression()
 
+    # Self explanatory...
     def is_comparison_operator(self):
         return self.check_token(TokenType.COMP_EQEQ) or self.check_token(TokenType.COMP_NTEQ) or self.check_token(TokenType.COMP_LT) or self.check_token(TokenType.COMP_GT) or self.check_token(TokenType.COMP_LTEQ) or self.check_token(TokenType.COMP_GTEQ)
 
